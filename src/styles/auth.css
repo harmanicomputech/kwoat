@@ -1,0 +1,235 @@
+.auth {
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+}
+.au-art {
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: #07050d;
+}
+.au-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: blur(30px) saturate(1.3);
+}
+.au-logo {
+  position: absolute;
+  top: 28px;
+  left: 32px;
+  z-index: 2;
+}
+.au-orbit {
+  position: relative;
+  width: min(520px, 70vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+}
+.au-orbit::before {
+  content: '';
+  position: absolute;
+  inset: 22%;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.au-orbit span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  font-size: 13px;
+  white-space: nowrap;
+  background: rgba(10, 6, 20, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(10px);
+  translate: -50% -50%;
+  transform-origin: center;
+  /* place on the circle; GSAP spins parent and counter-spins the chip */
+  margin-left: calc(cos(var(--a)) * min(260px, 35vw));
+  margin-top: calc(sin(var(--a)) * min(260px, 35vw));
+}
+.au-orbit i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.au-art-copy {
+  position: absolute;
+  left: 32px;
+  bottom: 32px;
+  z-index: 2;
+}
+.au-art-copy p {
+  font-size: 34px;
+  line-height: 1.1;
+}
+.au-art-copy small {
+  color: rgba(255, 255, 255, 0.6);
+}
+.au-main {
+  display: grid;
+  place-items: center;
+  padding: 60px var(--gutter);
+}
+.au-form {
+  width: 100%;
+  max-width: 400px;
+  display: grid;
+  gap: 14px;
+}
+.au-title {
+  font-size: clamp(34px, 3.4vw, 48px);
+  letter-spacing: -0.045em;
+  line-height: 1;
+  font-weight: 650;
+  overflow: hidden;
+  padding-bottom: 4px;
+}
+.au-title .ch {
+  display: inline-block;
+}
+.au-sub {
+  color: var(--text-2);
+  margin-bottom: 12px;
+}
+.au-prompt {
+  font-size: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px dashed var(--violet);
+  color: var(--text-2);
+  background: color-mix(in oklab, var(--violet) 10%, transparent);
+}
+.au-prompt b {
+  color: var(--text);
+  font-weight: 550;
+}
+.au-oauth {
+  height: 50px;
+  border-radius: 14px;
+  border: 1px solid var(--line-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 550;
+  background: var(--surface);
+  transition: border-color 0.3s, transform 0.3s var(--ease);
+}
+.au-oauth:hover {
+  border-color: var(--violet-2);
+  transform: translateY(-2px);
+}
+.au-or {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-3);
+  font-size: 13px;
+}
+.au-or::before,
+.au-or::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+.field {
+  position: relative;
+  display: block;
+}
+.field input {
+  width: 100%;
+  height: 56px;
+  padding: 20px 16px 6px;
+  border-radius: 14px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  outline: 0;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.field input:focus {
+  border-color: var(--violet-2);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--violet) 20%, transparent);
+}
+.field span {
+  position: absolute;
+  left: 17px;
+  top: 18px;
+  font-size: 15px;
+  color: var(--text-3);
+  pointer-events: none;
+  transform-origin: left;
+  transition: transform 0.3s var(--ease), color 0.3s;
+}
+.field input:focus + span,
+.field input:not(:placeholder-shown) + span {
+  transform: translateY(-11px) scale(0.75);
+  color: var(--violet-2);
+}
+.au-error {
+  font-size: 14px;
+  color: var(--danger);
+  animation: shake 0.4s;
+}
+@keyframes shake {
+  25% {
+    transform: translateX(-6px);
+  }
+  75% {
+    transform: translateX(6px);
+  }
+}
+.au-submit {
+  --h: 54px;
+  width: 100%;
+  border-radius: 14px;
+  margin-top: 6px;
+}
+.au-submit[disabled] {
+  opacity: 0.8;
+}
+.au-switch {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-2);
+}
+.au-switch a {
+  color: var(--violet-3);
+  font-weight: 550;
+}
+.au-demo {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-3);
+  font-family: var(--mono);
+}
+@media (max-width: 900px) {
+  .auth {
+    grid-template-columns: 1fr;
+  }
+  .au-art {
+    min-height: 300px;
+  }
+  .au-orbit {
+    width: 260px;
+  }
+  .au-orbit span {
+    font-size: 11px;
+    margin-left: calc(cos(var(--a)) * 130px);
+    margin-top: calc(sin(var(--a)) * 130px);
+  }
+  .au-art-copy {
+    display: none;
+  }
+}
