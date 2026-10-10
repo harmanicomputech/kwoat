@@ -1,0 +1,234 @@
+/* Site-wide chrome shared by every page: cursor, wordmark, split-flap, dither */
+
+/* ---------- Crosshair cursor ---------- */
+.has-cursor,
+.has-cursor * {
+  cursor: none !important;
+}
+.xh {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  pointer-events: none;
+  mix-blend-mode: difference;
+  color: #ecebe4;
+}
+html:not(.has-cursor) .xh {
+  display: none;
+}
+.xh-h,
+.xh-v {
+  position: absolute;
+  background: currentColor;
+  transition: transform 0.4s var(--ease), opacity 0.3s;
+}
+.xh-h {
+  width: 18px;
+  height: 1px;
+  left: -9px;
+  top: 0;
+}
+.xh-v {
+  width: 1px;
+  height: 18px;
+  left: 0;
+  top: -9px;
+}
+.xh-box {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  translate: -50% -50%;
+  border: 1px solid currentColor;
+  display: grid;
+  place-items: center;
+  transition: width 0.45s var(--ease), height 0.45s var(--ease), background 0.3s, border-color 0.3s;
+}
+.xh-box span {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #0e0e0c;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.xh-coords {
+  position: absolute;
+  left: 14px;
+  top: 12px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  opacity: 0.75;
+  transition: opacity 0.3s;
+}
+.xh.is-link .xh-box {
+  width: 34px;
+  height: 34px;
+  background: currentColor;
+}
+.xh.is-link .xh-h,
+.xh.is-link .xh-v,
+.xh.is-label .xh-h,
+.xh.is-label .xh-v {
+  opacity: 0;
+}
+.xh.is-link .xh-coords,
+.xh.is-label .xh-coords {
+  opacity: 0;
+}
+.xh.is-label {
+  mix-blend-mode: normal;
+}
+.xh.is-label .xh-box {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--signal);
+  border-color: var(--signal);
+}
+.xh.is-label .xh-box span {
+  opacity: 1;
+  color: var(--signal-ink);
+}
+.xh.is-field .xh-box {
+  width: 2px;
+  height: 22px;
+  background: currentColor;
+}
+.xh.is-field .xh-h,
+.xh.is-field .xh-v,
+.xh.is-field .xh-coords {
+  opacity: 0;
+}
+.xh.is-down .xh-box {
+  transform: scale(0.7);
+}
+
+/* ---------- Wordmark ---------- */
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--serif);
+  font-size: 23px;
+  font-weight: 450;
+  letter-spacing: -0.03em;
+  font-variation-settings: 'opsz' 48;
+}
+.wordmark sup {
+  font-family: var(--mono);
+  font-size: 9px;
+  margin-left: -6px;
+  align-self: flex-start;
+  margin-top: 2px;
+}
+.mark-needle {
+  transform-origin: 16px 16px;
+  transition: transform 0.8s var(--ease);
+}
+a:hover .mark-needle,
+.wordmark:hover .mark-needle {
+  transform: rotate(90deg);
+}
+
+/* ---------- Split-flap ---------- */
+.flap {
+  display: inline-flex;
+  gap: 2px;
+  font-family: var(--mono);
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.flap-cell {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 0.78em;
+  height: 1.3em;
+  border-radius: 2px;
+  background: var(--flap-bg, #1d1d1a);
+  color: var(--flap-fg, #ecebe4);
+  overflow: hidden;
+  perspective: 120px;
+}
+.flap-cell::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.55);
+}
+.flap-ch {
+  display: block;
+  line-height: 1;
+  animation: flap 0.12s ease-out;
+  transform-origin: 50% 50%;
+}
+@keyframes flap {
+  from {
+    transform: rotateX(70deg);
+    opacity: 0.4;
+  }
+}
+.flap-xl {
+  font-size: clamp(40px, 9vw, 120px);
+  gap: 6px;
+}
+.flap-xl .flap-cell {
+  border-radius: 6px;
+}
+.flap-lcd {
+  --flap-bg: transparent;
+  --flap-fg: inherit;
+  gap: 0;
+}
+.flap-lcd .flap-cell {
+  width: 0.62em;
+  height: 1.25em;
+}
+.flap-lcd .flap-cell::after {
+  display: none;
+}
+.flap-board {
+  font-size: 15px;
+}
+.flap-signal {
+  --flap-fg: var(--signal);
+}
+.flap-ok {
+  --flap-fg: #2bd46f;
+}
+.flap-count {
+  font-size: clamp(26px, 3vw, 40px);
+  --flap-bg: var(--night-3);
+  --flap-fg: var(--night-text);
+}
+.flap-price {
+  font-size: clamp(36px, 3.4vw, 52px);
+  --flap-bg: var(--ink);
+  --flap-fg: var(--paper);
+  gap: 3px;
+}
+.flap-price .flap-cell {
+  border-radius: 4px;
+}
+
+/* ---------- Dither ---------- */
+.dither {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+}
+.dither.no-webgl {
+  background: radial-gradient(circle at 75% 45%, var(--signal-soft), transparent 50%);
+}
