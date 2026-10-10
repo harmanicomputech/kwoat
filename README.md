@@ -22,6 +22,21 @@ npm run preview    # serve dist/
 
 Log in with any email and an 8+ character password (demo mode).
 
+## Hosting on cPanel / DirectAdmin
+
+It is a static site, so any shared host works (no Node or PHP needed on the server).
+
+1. Run `npm run build` (or use a zip of the `dist/` folder).
+2. Upload **the contents** of `dist/` into `public_html/` (or the domain's document root) — `index.html` must sit
+   directly in that folder, not in `public_html/dist/`.
+3. Make sure the hidden `.htaccess` file was uploaded too (in cPanel File Manager: Settings → Show Hidden Files).
+   It sends routes like `/app` and `/login` to `index.html` and sets caching.
+4. Turn on SSL for the domain (cPanel: *SSL/TLS Status* → AutoSSL; DirectAdmin: *SSL Certificates* → Let's Encrypt).
+   If SSL isn't ready yet, delete the two "Force HTTPS" lines from `.htaccess`.
+
+To host it in a sub-folder (e.g. `example.com/kwoat/`) set `base: '/kwoat/'` in `vite.config.ts`, add
+`basename="/kwoat"` to `<BrowserRouter>` in `src/main.tsx`, and change the last rewrite rule to `/kwoat/index.html`.
+
 ## What's in it
 
 **Landing page** (`src/landing/`)
