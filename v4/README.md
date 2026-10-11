@@ -23,6 +23,26 @@ All motion respects `prefers-reduced-motion`; WebGL pauses off-screen and falls 
 The earlier hero with the 3D glass logo is kept in `src/landing/GlassScene.tsx` (not used on the page any more) and
 in git history at commit `a0136fa`.
 
+## The app (signed in, `/app`)
+
+Rebuilt from the screens of the live kwoat.ai app, with the same structure and wording, plus motion:
+
+| Screen | What's there |
+|---|---|
+| **Shell** | Sidebar with a turning-gradient Upgrade pill, New Chat (light sweep), a highlight that slides between Missions / Search / More, Projects, conversations grouped by day, and the account button with live wallet chip. Collapses to an icon rail with tooltips; a drawer on phones. Top bar with Auto mode and a daily-credits ring; the "Wallet empty" banner. |
+| **Chat** (`/app/chat`) | Greeting revealed letter by letter, logo mark with a glowing ring, aurora background that follows the pointer. Message box with a rotating gradient border on focus, typed placeholder ideas, model picker (search, tiers, costs), + menu, dictation demo and voice-live button. Write / Code / Analyse / Compare / Image / Summarise tiles tilt in 3D and open prompt ideas. Replies show the routing scan, stream in, and carry copy / regenerate / rate / cost. Image prompts produce artwork that is saved to the Gallery. |
+| **Search** (⌘K) | Command palette over all chats with highlighted matches and keyboard navigation. |
+| **New project** | Chat or Mission workspace (Mission gated to Pro Max with an upgrade note). |
+| **Missions** | Count-up stats, "What others are building" (click to preview), and a live agent terminal looping through a mission inside the Pro Max upgrade card. |
+| **Wallet** | Overview / Credits / Transactions. Holographic 3D wallet card, credit-cost table, daily reset countdown. Top-up dialog with gliding selection, rolling total, processing and a confetti success. |
+| **Usage** | KPIs, credits-over-time chart (draws in, hover tooltip), usage-by-type donut, feature usage, history by request / model / date. "Preview with sample data" fills it for demos. |
+| **Gallery** | Filters with animated re-flow, lightbox, animated empty state. |
+| **Subscription** (`/app/subscription`) | Current plan meter, monthly/annual switch, four plan cards, payment, how pricing works, FAQ. |
+| **Settings** | Account, Access & Security (password, authenticator setup with QR and code entry, sessions), Integrations, Customize (theme, chat font size and style, default model, visible models — all applied to the chat), Notifications, Data & Control (JSON export, delete with typed confirmation), Help. |
+
+Everything the app remembers (chats, projects, wallet, usage, images, preferences) is kept in the browser in
+`src/app/workspace.tsx` until the backend exists; each action there maps to one endpoint.
+
 ## Run, build, host
 
 ```bash

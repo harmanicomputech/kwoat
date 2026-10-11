@@ -31,7 +31,7 @@ export async function login(email: string, _password: string): Promise<User> {
     id: uid(),
     name: email.split('@')[0].replace(/\W+/g, ' ').trim() || 'Friend',
     email,
-    plan: 'pro',
+    plan: 'free',
     credits: { standard: 5495, advanced: 2000, premium: 0 },
     images: { used: 5, limit: 20 },
   }

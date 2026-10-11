@@ -1,119 +1,208 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { gsap } from '../lib/motion'
-import { Icon } from '../components/ui'
-import { api, type Mission } from '../api'
+import { Icon, type IconName } from '../components/ui'
+import { useTilt } from '../lib/hooks'
+import { Count, usePageIn } from './kit'
 
-const IDEAS = ['Build a TypeScript REST API with JWT auth and Postgres', 'Research deck: African fintech trends 2026', 'Financial model for a 3-store bakery']
-const KIND_ICON: Record<string, string> = { think: '✦', search: '⌕', write: '+', run: '▶', fix: '⟲', done: '✓' }
+const IDEAS = ['Research top 3 open banking APIs and create a comparison deck', 'Build a TypeScript REST API with JWT auth and PostgreSQL', 'Build a 5-year SaaS financial model with forecasting']
+
+const FEATURES: { icon: IconName; label: string }[] = [
+  { icon: 'globe', label: 'Live web research' },
+  { icon: 'code', label: 'Real code execution' },
+  { icon: 'doc', label: 'PPTX · DOCX · XLSX' },
+  { icon: 'download', label: 'Downloadable ZIP' },
+  { icon: 'layers', label: 'Iterates until done' },
+  { icon: 'bolt', label: 'Python · Node · Go' },
+]
+
+type Step = { k: 'think' | 'search' | 'write' | 'run' | 'fix' | 'done'; t: string }
+const SCRIPTS: Step[][] = [
+  [
+    { k: 'think', t: 'Planning: compare Plaid, TrueLayer, Mono' },
+    { k: 'search', t: 'Reading 14 sources — pricing, coverage, SDKs' },
+    { k: 'write', t: 'comparison.xlsx' },
+    { k: 'write', t: 'open-banking-deck.pptx' },
+    { k: 'run', t: 'Checking every figure against sources' },
+    { k: 'done', t: 'Deck ready — 12 slides' },
+  ],
+  [
+    { k: 'think', t: 'Planning: Express + TypeScript, JWT, Postgres' },
+    { k: 'write', t: 'src/db/pool.ts' },
+    { k: 'write', t: 'src/middleware/auth.ts' },
+    { k: 'run', t: 'npm test — 23 passed, 1 failed' },
+    { k: 'fix', t: 'Token expiry used seconds, expected ms' },
+    { k: 'done', t: 'npm test — 24 passed · 14 files' },
+  ],
+  [
+    { k: 'think', t: 'Planning: revenue, churn, CAC, runway' },
+    { k: 'search', t: 'Benchmarking SaaS growth rates' },
+    { k: 'write', t: 'model.py' },
+    { k: 'run', t: 'python model.py — 5-year forecast' },
+    { k: 'write', t: 'saas-model.xlsx' },
+    { k: 'done', t: 'Model ready with 3 scenarios' },
+  ],
+]
+const KIND_ICON: Record<Step['k'], IconName> = { think: 'sparkle', search: 'globe', write: 'file', run: 'bolt', fix: 'refresh', done: 'check' }
 
 export default function Missions() {
-  const [goal, setGoal] = useState(IDEAS[0])
-  const [mission, setMission] = useState<Mission | null>(null)
-  const abort = useRef<AbortController | null>(null)
-  const feed = useRef<HTMLDivElement>(null)
+  const root = usePageIn<HTMLDivElement>()
+  const navigate = useNavigate()
+  const [script, setScript] = useState(1)
+  const rocket = useRef<HTMLSpanElement>(null)
 
-  useEffect(() => () => abort.current?.abort(), [])
-  useEffect(() => {
-    const el = feed.current
-    if (!el) return
-    el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' })
-    const last = el.querySelector('.ms-step:last-child')
-    if (last) gsap.from(last, { x: -30, opacity: 0, duration: 0.6, ease: 'kwoat' })
-  }, [mission?.steps.length])
-
-  const start = async () => {
-    abort.current = new AbortController()
-    try {
-      await api.runMission(goal, setMission, abort.current.signal)
-    } catch {
-      setMission((m) => (m ? { ...m, status: 'stopped' } : m))
-    }
-  }
-
-  const progress = mission ? Math.min(1, mission.steps.length / 11) : 0
+  useLayoutEffect(() => {
+    if (!rocket.current) return
+    gsap.fromTo(rocket.current, { x: -30, y: 30, opacity: 0, rotate: -20 }, { x: 0, y: 0, opacity: 1, rotate: 0, duration: 1.1, ease: 'back.out(1.6)', delay: 0.2 })
+  }, [])
 
   return (
-    <div className="page missions">
-      {!mission ? (
-        <div className="ms-start">
-          <div className="ms-rocket">
-            <Icon name="rocket" size={46} />
-          </div>
-          <span className="eyebrow">Agent missions</span>
-          <h1>Give it a goal. Get finished work.</h1>
-          <p>Kwoat’s agent searches the web, writes code, runs it in a live sandbox, fixes bugs and hands you the files.</p>
-          <div className="ms-input card">
-            <textarea value={goal} onChange={(e) => setGoal(e.target.value)} rows={2} aria-label="Mission goal" />
-            <button className="btn btn-primary" onClick={start} data-cursor="hover">
-              <Icon name="rocket" /> Launch mission
+    <div ref={root} className="kp ms">
+      <header className="ms-title reveal">
+        <span ref={rocket} className="ms-rocket">
+          <Icon name="rocket" size={26} />
+          <i className="ms-trail" />
+        </span>
+        <h1>Missions</h1>
+        <span className="k-badge shimmer">Pro Max</span>
+      </header>
+
+      <div className="ms-stats">
+        <Stat lead>
+          <b className="grad-num">
+            <Count value={10} duration={1.6} />
+          </b>
+          <small>missions/month included</small>
+        </Stat>
+        <Stat>
+          <b>Sandbox</b>
+          <small>live code execution</small>
+        </Stat>
+        <Stat>
+          <b>Flat rate</b>
+          <small>simple overage, no surprises</small>
+        </Stat>
+      </div>
+
+      <h4 className="k-kicker reveal">What others are building</h4>
+      <div className="ms-ideas">
+        {IDEAS.map((idea, i) => (
+          <button key={idea} className={`ms-idea reveal ${script === i ? 'on' : ''}`} onClick={() => setScript(i)}>
+            <span className="ms-idea-dot" />
+            <span>{idea}</span>
+            <span className="ms-idea-go">
+              {script === i ? 'Watching' : 'Preview'} <Icon name="send" size={13} />
+            </span>
+          </button>
+        ))}
+      </div>
+
+      <section className="ms-unlock reveal">
+        <span className="ms-unlock-border" aria-hidden />
+        <AgentDemo key={script} steps={SCRIPTS[script]} goal={IDEAS[script]} />
+        <div className="ms-unlock-copy">
+          <span className="k-kicker accent">
+            <i /> Unlock with Pro Max
+          </span>
+          <h2>Your AI that actually does the work</h2>
+          <p>Give it a goal. It searches, writes code, runs it, fixes bugs, and hands you finished files — all on its own.</p>
+          <ul className="ms-feats">
+            {FEATURES.map((f) => (
+              <li key={f.label}>
+                <Icon name={f.icon} size={16} /> {f.label}
+              </li>
+            ))}
+          </ul>
+          <div className="ms-cta">
+            <button className="k-btn primary lg shine" onClick={() => navigate('/app/subscription')}>
+              <Icon name="rocket" size={17} /> Upgrade to Pro Max — $149.00/mo
+            </button>
+            <button className="k-link" onClick={() => navigate('/app/subscription')}>
+              See what's included
             </button>
           </div>
-          <div className="ms-ideas">
-            {IDEAS.map((i) => (
-              <button key={i} className="chip" onClick={() => setGoal(i)}>
-                {i}
-              </button>
-            ))}
-          </div>
         </div>
-      ) : (
-        <div className="ms-run">
-          <header className="ms-head card">
-            <span className={`ms-status ${mission.status}`}>
-              <span className="dot pulse" /> {mission.status === 'running' ? 'Mission running' : mission.status === 'done' ? 'Mission complete' : 'Stopped'}
-            </span>
-            <span className="ms-goal">{mission.goal}</span>
-            <span className="chip">Step {mission.steps.length}</span>
-            {mission.status === 'running' ? (
-              <button className="btn btn-ghost btn-sm ms-stop" onClick={() => abort.current?.abort()}>
-                <Icon name="x" size={14} /> Stop
-              </button>
-            ) : (
-              <button className="btn btn-ghost btn-sm" onClick={() => setMission(null)}>
-                New mission
-              </button>
-            )}
-            <i className="ms-bar" style={{ transform: `scaleX(${progress})` }} />
-          </header>
-          <div className="ms-body">
-            <div ref={feed} className="ms-feed card">
-              <h4>Agent feed</h4>
-              {mission.steps.map((s) => (
-                <div key={s.id} className={`ms-step k-${s.kind}`}>
-                  <span className="ms-ico">{KIND_ICON[s.kind]}</span>
-                  <div>
-                    <b>{s.label}</b>
-                    {s.detail && <small>{s.detail}</small>}
-                  </div>
-                </div>
-              ))}
-              {mission.status === 'running' && (
-                <div className="ms-step k-pending">
-                  <span className="ms-ico spinner" />
-                  <div>
-                    <b>Working…</b>
-                  </div>
-                </div>
-              )}
+      </section>
+    </div>
+  )
+}
+
+function Stat({ children, lead }: { children: React.ReactNode; lead?: boolean }) {
+  const ref = useTilt<HTMLDivElement>(6)
+  return (
+    <div ref={ref} className={`ms-stat reveal ${lead ? 'lead' : ''}`}>
+      <span className="ms-stat-shine" aria-hidden />
+      {children}
+    </div>
+  )
+}
+
+/** A looping, scripted agent run: terminal feed on the left, files appearing on the right. */
+function AgentDemo({ steps, goal }: { steps: Step[]; goal: string }) {
+  const [n, setN] = useState(0)
+  const feed = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const t = setTimeout(() => setN((x) => (x >= steps.length + 3 ? 0 : x + 1)), n === 0 ? 700 : 1100)
+    return () => clearTimeout(t)
+  }, [n, steps.length])
+  useLayoutEffect(() => {
+    const last = feed.current?.querySelector('.ad-step:last-child')
+    if (last && n > 0 && n <= steps.length) gsap.from(last, { x: -16, opacity: 0, duration: 0.5, ease: 'kwoat' })
+  }, [n, steps.length])
+  const shown = steps.slice(0, Math.min(n, steps.length))
+  const files = shown.filter((s) => s.k === 'write')
+  const done = n >= steps.length
+  return (
+    <div className="ms-demo">
+      <div className="ms-demo-bar">
+        <span className="ms-demo-dots">
+          <i />
+          <i />
+          <i />
+        </span>
+        <span className="ms-demo-goal">{goal}</span>
+        <span className={`ms-demo-status ${done ? 'done' : ''}`}>
+          <span className="dot pulse" /> {done ? 'Complete' : 'Running'}
+        </span>
+      </div>
+      <div className="ms-demo-body">
+        <div ref={feed} className="ms-demo-feed">
+          {shown.map((s, i) => (
+            <div key={i} className={`ad-step k-${s.k}`}>
+              <span className="ad-ico">
+                <Icon name={KIND_ICON[s.k]} size={13} />
+              </span>
+              <span>{s.k === 'write' ? `Writing ${s.t}` : s.t}</span>
             </div>
-            <aside className="ms-files card">
-              <h4>
-                <Icon name="file" size={14} /> Workspace
-              </h4>
-              {mission.files.map((f) => (
-                <div key={f} className="ms-file">
-                  <Icon name="file" size={14} /> {f} <span className="ms-ok">✓</span>
-                </div>
-              ))}
-              {mission.status === 'done' && (
-                <button className="btn btn-primary btn-sm ms-dl">
-                  <Icon name="download" size={16} /> Download all
-                </button>
-              )}
-            </aside>
-          </div>
+          ))}
+          {!done && (
+            <div className="ad-step pending">
+              <span className="ad-ico">
+                <span className="k-spin" />
+              </span>
+              <span className="ad-typing">
+                <i />
+                <i />
+                <i />
+              </span>
+            </div>
+          )}
         </div>
-      )}
+        <div className="ms-demo-files">
+          <small>Workspace</small>
+          {files.map((f) => (
+            <span key={f.t} className="ms-demo-file">
+              <Icon name="file" size={13} /> {f.t}
+            </span>
+          ))}
+          {done && (
+            <span className="ms-demo-zip">
+              <Icon name="download" size={13} /> Download all
+            </span>
+          )}
+        </div>
+      </div>
+      <i className="ms-demo-progress" style={{ transform: `scaleX(${Math.min(1, n / steps.length)})` }} />
     </div>
   )
 }

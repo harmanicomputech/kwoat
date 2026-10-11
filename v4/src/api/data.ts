@@ -11,6 +11,7 @@ export const MODELS: Model[] = [
   { id: 'claude-sonnet-4.6', name: 'Claude Sonnet 4.6', vendor: 'Anthropic', tier: 'premium', cost: 6, color: '#fbbf24', strengths: ['code', 'web pages', 'writing'] },
   { id: 'claude-opus-4.7', name: 'Claude Opus 4.7', vendor: 'Anthropic', tier: 'premium', cost: 15, color: '#f59e0b', strengths: ['deep reasoning', 'agents'] },
   { id: 'flux-2-klein', name: 'FLUX.2 Klein', vendor: 'Black Forest Labs', tier: 'standard', cost: 4, color: '#e879f9', strengths: ['images'] },
+  { id: 'kling-2.6-pro', name: 'Kling 2.6 Pro', vendor: 'Kling', tier: 'premium', cost: 40, color: '#38bdf8', strengths: ['video'] },
   { id: 'nano-banana-2', name: 'Nano Banana 2', vendor: 'Google', tier: 'advanced', cost: 5, color: '#facc15', strengths: ['images', 'editing'] },
 ]
 

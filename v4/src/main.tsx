@@ -18,6 +18,9 @@ const Gallery = lazy(() => import('./app/Gallery'))
 const Missions = lazy(() => import('./app/Missions'))
 const Voice = lazy(() => import('./app/Voice'))
 const Usage = lazy(() => import('./app/Usage'))
+const Wallet = lazy(() => import('./app/Wallet'))
+const Subscription = lazy(() => import('./app/Subscription'))
+const Settings = lazy(() => import('./app/Settings'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 // Apply the saved theme before first paint
@@ -34,6 +37,12 @@ function ScrollReset() {
     ScrollTrigger.refresh()
   }, [pathname])
   return null
+}
+
+/** /app → /app/chat, keeping ?prompt= handed over from the landing page */
+function ToChat() {
+  const { search } = useLocation()
+  return <Navigate to={{ pathname: 'chat', search }} replace />
 }
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
@@ -64,7 +73,11 @@ createRoot(document.getElementById('root')!).render(
                 </RequireAuth>
               }
             >
-              <Route index element={<Chat />} />
+              <Route index element={<ToChat />} />
+              <Route path="chat/:id?" element={<Chat />} />
+              <Route path="wallet" element={<Wallet />} />
+              <Route path="subscription" element={<Subscription />} />
+              <Route path="settings" element={<Settings />} />
               <Route path="compare" element={<Compare />} />
               <Route path="gallery" element={<Gallery />} />
               <Route path="missions" element={<Missions />} />
