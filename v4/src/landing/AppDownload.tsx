@@ -17,11 +17,13 @@ const PUSHES = [
   { t: 'Image ready', d: '“Neon fox in a rainy alley” · 4 variations', c: '#db2777', i: 'image' as const },
   { t: 'Routed to Claude Sonnet 4.6', d: 'Landing page · 6 credits', c: '#7c3aed', i: 'bolt' as const },
 ]
-const PERKS = [
-  { i: 'mic' as const, t: 'Voice live, hands-free' },
-  { i: 'bolt' as const, t: 'Push when missions finish' },
-  { i: 'wallet' as const, t: 'One wallet on every device' },
-  { i: 'image' as const, t: 'Your gallery, in your pocket' },
+const ORBIT: { i: 'mic' | 'image' | 'bolt' | 'chat' | 'rocket' | 'wallet'; c: string }[] = [
+  { i: 'mic', c: '#7c3aed' },
+  { i: 'image', c: '#db2777' },
+  { i: 'bolt', c: '#f59e0b' },
+  { i: 'chat', c: '#0891b2' },
+  { i: 'rocket', c: '#16a34a' },
+  { i: 'wallet', c: '#6366f1' },
 ]
 
 /* ---------- phone screens ---------- */
@@ -76,6 +78,7 @@ function ChatScreen({ live }: { live: boolean }) {
         <span>Ask anything…</span>
         <span className="ps-mic">
           <Icon name="mic" size={13} />
+          <i className="ps-tap" aria-hidden />
         </span>
       </div>
     </div>
@@ -167,11 +170,12 @@ export function AppDownload() {
     const ctx = gsap.context(() => {
       const split = SplitText.create('.ad-title', { type: 'words', wordsClass: 'w', mask: 'words' })
       const tl = gsap.timeline({ scrollTrigger: { trigger: root.current, start: 'top 70%' }, defaults: { ease: 'kwoat' } })
-      tl.from('.ad-kicker', { y: 16, opacity: 0, duration: 0.9 })
+      tl.from('.ad-icon', { scale: 0, rotate: -40, duration: 1.2, ease: 'back.out(1.8)' })
+        .from('.ad-kicker', { y: 16, opacity: 0, duration: 0.9 }, 0.15)
         .from(split.words, { yPercent: 110, duration: 1.2, stagger: 0.05 }, 0.1)
         .from('.ad-lede', { y: 16, opacity: 0, filter: 'blur(6px)', duration: 1 }, 0.35)
         .from('.store-btn', { y: 24, opacity: 0, scale: 0.9, duration: 1, stagger: 0.1 }, 0.5)
-        .from('.ad-perk', { x: -20, opacity: 0, duration: 0.8, stagger: 0.07 }, 0.65)
+        .from('.ad-orbit span', { scale: 0, opacity: 0, duration: 0.8, stagger: 0.08, ease: 'back.out(2)' }, 1)
         .from('.phone-a', { y: 220, rotate: -14, opacity: 0, duration: 1.6 }, 0.2)
         .from('.phone-b', { y: 260, rotate: 18, opacity: 0, duration: 1.6 }, 0.35)
         .from('.ad-chip', { scale: 0, opacity: 0, duration: 0.9, stagger: 0.1, ease: 'back.out(1.8)' }, 0.9)
@@ -218,24 +222,16 @@ export function AppDownload() {
       </div>
       <div className="container ad-grid">
         <div className="ad-copy">
-          <span className="eyebrow ad-kicker">Kwoat for iPhone &amp; Android</span>
+          <div className="ad-icon" aria-hidden>
+            <Mark size={38} />
+            <i />
+          </div>
+          <span className="eyebrow ad-kicker">iPhone &amp; Android</span>
           <h2 className="ad-title display">
             Every AI model, <span className="grad-text">in your pocket.</span>
           </h2>
-          <p className="ad-lede lede">
-            Ask by voice on the walk to work, get a push the moment your agent finishes, and keep one wallet across phone and laptop. Same models, same credits — wherever you are.
-          </p>
+          <p className="ad-lede">Same models. Same wallet. Anywhere.</p>
           <StoreButtons />
-          <ul className="ad-perks">
-            {PERKS.map((x) => (
-              <li key={x.t} className="ad-perk">
-                <span>
-                  <Icon name={x.i} size={15} />
-                </span>
-                {x.t}
-              </li>
-            ))}
-          </ul>
         </div>
 
         <div ref={ref} className="ad-visual">
@@ -245,6 +241,7 @@ export function AppDownload() {
               <div className="phone-body android">
                 <span className="punch" />
                 <div className="phone-screen">
+                  <i className="ps-glare" aria-hidden />
                   <div className="ps-status">
                     <span>9:41</span>
                     <span className="ps-sig">
@@ -262,6 +259,7 @@ export function AppDownload() {
               <div className="phone-body ios">
                 <span className="island" />
                 <div className="phone-screen">
+                  <i className="ps-glare" aria-hidden />
                   <div className="ps-status">
                     <span>9:41</span>
                     <span className="ps-sig">
@@ -285,6 +283,15 @@ export function AppDownload() {
               </div>
             </div>
 
+            <div className="ad-orbit" aria-hidden>
+              {ORBIT.map((o, i) => (
+                <span key={o.i} style={{ ['--k' as string]: i, ['--c' as string]: o.c }}>
+                  <b>
+                    <Icon name={o.i} size={16} />
+                  </b>
+                </span>
+              ))}
+            </div>
             <span className="ad-chip c1">
               <Icon name="mic" size={14} /> Talk, don’t type
             </span>
