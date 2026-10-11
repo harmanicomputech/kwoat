@@ -9,10 +9,8 @@ upload package.
 
 | Effect | How it's built |
 |---|---|
-| **3D glass logo** | The five-ray Kwoat mark extruded in Three.js with a physical glass material (transmission, iridescence, dispersion, clearcoat) lit by a studio environment map. The rays fly in and lock together on load, follow the mouse, float when idle, and pull apart along their own axes as you scroll. |
-| **Living gradient** | A full-screen GLSL mesh gradient behind the glass — pastel in light mode, deep violet in dark — that the glass actually refracts. |
-| **3D orbiting labels** | Model names circle the logo in 3D. They're real HTML, projected every frame through the WebGL camera so depth, scale and blur match the scene. |
-| **Theme switch** | View Transitions API: the new theme spreads out in a circle from the toggle. The 3D scene fades its palette to match. |
+| **Hero** | Centred headline over a Stripe-style WebGL mesh gradient (pastel in light mode, deep violet in dark) and a fading engineering grid. Below it, a live replica of the Kwoat app in a browser window, tilted back in 3D, settles flat as you scroll. Inside, a prompt is typed and sent, Kwoat shows "Reading prompt → Choosing model" while it scans the models, then the answer streams in with the model and cost — on a loop. Glass cards (routing notice, compare, wallet) float around the window with pointer and scroll parallax. |
+| **Theme switch** | View Transitions API: the new theme spreads out in a circle from the toggle. The hero gradient fades its palette to match. |
 | **Pinned scroll scenes** | "How it works" (prompt cards fly in at different depths, get pulled into the mark, a beam picks the model, the answer rises) and "One wallet" (subscriptions collapse into one wallet card). |
 | **Horizontal gallery** | Features scroll sideways inside a pinned section with inner parallax and live mini demos. |
 | **Live playground** | A working compare demo on the landing page — type a prompt, four models stream side by side, the fastest is flagged. |
@@ -20,6 +18,9 @@ upload package.
 | **Plus** | Preloader with drawn logo, velocity-reactive model marquee, letter-by-letter headline reveals, scroll-scrubbed text, 3D tilt cards with glare, parallax quotes, magnetic buttons, custom cursor with labels, animated pricing, smooth scrolling, film grain. |
 
 All motion respects `prefers-reduced-motion`; WebGL pauses off-screen and falls back to a CSS gradient without WebGL.
+
+The earlier hero with the 3D glass logo is kept in `src/landing/GlassScene.tsx` (not used on the page any more) and
+in git history at commit `a0136fa`.
 
 ## Run, build, host
 

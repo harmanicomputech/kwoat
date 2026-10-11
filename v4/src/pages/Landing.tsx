@@ -8,6 +8,7 @@ import { Playground, Tour, Stats, Voices, FAQ, Finale, Footer } from '../landing
 import { Wallet } from '../landing/Wallet'
 import { Pricing } from '../landing/Pricing'
 import '../styles/landing.css'
+import '../styles/hero.css'
 
 export default function Landing() {
   const [ready, setReady] = useState(false)
