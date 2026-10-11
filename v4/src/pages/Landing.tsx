@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ScrollTrigger, startSmoothScroll, stopSmoothScroll } from '../lib/motion'
 import { Hero, Nav, Preloader } from '../landing/Top'
-import { Marquee } from '../landing/Marquee'
+import { Logos } from '../landing/Logos'
 import { How } from '../landing/How'
 import { Features } from '../landing/Features'
 import { Playground, Tour, Stats, Voices, FAQ, Finale, Footer } from '../landing/Rest'
@@ -27,7 +27,7 @@ export default function Landing() {
       <Nav />
       <main>
         <Hero ready={ready} />
-        <Marquee />
+        <Logos />
         <How />
         <Features />
         <Playground />

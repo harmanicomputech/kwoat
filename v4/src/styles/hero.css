@@ -597,3 +597,122 @@
     font-size: 15px;
   }
 }
+
+/* =================== Provider strip (single slow row) =================== */
+.logos {
+  padding: 90px 0 70px;
+  position: relative;
+}
+.lg-head {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+.lg-kicker {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.lg-title {
+  font-size: clamp(22px, 2.4vw, 32px);
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+  max-width: 760px;
+  text-wrap: balance;
+}
+.lg-viewport {
+  overflow: hidden;
+  padding: 14px 0 44px;
+  margin-bottom: -24px;
+  mask: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.lg-track {
+  display: flex;
+  width: max-content;
+  animation: lgSlide 48s linear infinite;
+}
+.lg-viewport:hover .lg-track {
+  animation-play-state: paused;
+}
+.lg-set {
+  display: flex;
+  gap: 16px;
+  padding-right: 16px;
+}
+@keyframes lgSlide {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.lg-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 22px 12px 12px;
+  border-radius: 20px;
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--line), var(--shadow);
+  white-space: nowrap;
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+.lg-tile {
+  width: 46px;
+  height: 46px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  color: var(--text-3);
+  background: var(--surface-2);
+  box-shadow: inset 0 0 0 1px var(--line);
+  transition: color 0.4s, background 0.4s, box-shadow 0.4s, transform 0.6s var(--ease);
+}
+.lg-text {
+  display: grid;
+  gap: 1px;
+}
+.lg-text b {
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  color: var(--text-2);
+  transition: color 0.3s;
+}
+.lg-text small {
+  font-size: 12.5px;
+  color: var(--text-3);
+}
+.lg-card:hover {
+  transform: translateY(-4px);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--c) 40%, transparent), 0 16px 40px -16px color-mix(in oklab, var(--c) 55%, transparent);
+}
+.lg-card:hover .lg-tile {
+  color: #fff;
+  background: linear-gradient(145deg, color-mix(in oklab, var(--c) 75%, #fff), var(--c));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 8px 20px -8px var(--c);
+  transform: rotate(-6deg) scale(1.05);
+}
+.lg-card:hover .lg-text b {
+  color: var(--text);
+}
+@media (max-width: 640px) {
+  .logos {
+    padding: 70px 0 50px;
+  }
+  .lg-card {
+    padding: 10px 16px 10px 10px;
+  }
+  .lg-tile {
+    width: 40px;
+    height: 40px;
+  }
+  .lg-track {
+    animation-duration: 36s;
+  }
+}
