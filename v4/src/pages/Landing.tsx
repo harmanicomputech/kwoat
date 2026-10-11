@@ -7,8 +7,10 @@ import { Features } from '../landing/Features'
 import { Playground, Tour, Stats, Voices, FAQ, Finale, Footer } from '../landing/Rest'
 import { Wallet } from '../landing/Wallet'
 import { Pricing } from '../landing/Pricing'
+import { AppDownload } from '../landing/AppDownload'
 import '../styles/landing.css'
 import '../styles/hero.css'
+import '../styles/app-download.css'
 
 export default function Landing() {
   const [ready, setReady] = useState(false)
@@ -38,6 +40,7 @@ export default function Landing() {
         <Pricing />
         <FAQ />
         <Finale />
+        <AppDownload />
       </main>
       <Footer />
     </div>

@@ -413,6 +413,7 @@ export function Footer() {
             <a href="#how">How it works</a>
             <a href="#features">Features</a>
             <a href="#pricing">Pricing</a>
+            <a href="#app">Mobile apps</a>
             <Link to="/app">Open app</Link>
           </div>
           <div>

@@ -15,6 +15,7 @@ upload package.
 | **Horizontal gallery** | Features scroll sideways inside a pinned section with inner parallax and live mini demos. |
 | **Live playground** | A working compare demo on the landing page — type a prompt, four models stream side by side, the fastest is flagged. |
 | **3D carousel** | The client's real app screenshots on a 3D ring that turns with scroll and can be dragged with inertia. |
+| **Get the app** | Section above the footer: an iPhone-style phone running the Kwoat chat (prompt → routing → streamed answer) with push notifications dropping in, an Android-style phone running Voice live (pulsing orb, waveform), floating feature chips, a slowly turning gradient and pulsing rings. Phones rise in on scroll, drift at different speeds, and tilt in 3D toward the pointer. App Store / Google Play buttons are styled for the site — set the real links in `APP_STORE_URL` / `PLAY_STORE_URL` at the top of `src/landing/AppDownload.tsx`. |
 | **Plus** | Preloader with drawn logo, a slow provider strip (custom glyph cards that colour up on hover), letter-by-letter headline reveals, scroll-scrubbed text, 3D tilt cards with glare, parallax quotes, magnetic buttons, custom cursor with labels, animated pricing, smooth scrolling, film grain. |
 
 All motion respects `prefers-reduced-motion`; WebGL pauses off-screen and falls back to a CSS gradient without WebGL.
