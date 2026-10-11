@@ -32,6 +32,9 @@ npm run dev        # http://localhost:5173
 npm run build      # → v4/dist
 ```
 
+To preview without a server, run `npm run build:single` and double-click `dist-single/index.html` (one self-contained
+file; uses hash URLs like `#/app` so it works from disk).
+
 For cPanel / DirectAdmin, upload the **contents** of `v4/dist/` (including the hidden `.htaccess`) into
 `public_html/`. Demo login for the app: any email + an 8-character password.
 

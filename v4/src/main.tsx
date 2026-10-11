@@ -1,6 +1,9 @@
 import { StrictMode, Suspense, lazy, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { BrowserRouter, HashRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
+
+// The single-file preview opens from disk (file://), where only hash URLs work
+const Router = import.meta.env.MODE === 'single' ? HashRouter : BrowserRouter
 import { AuthProvider, useAuth } from './lib/store'
 import { Cursor } from './components/Cursor'
 import { ScrollTrigger } from './lib/motion'
@@ -44,7 +47,7 @@ function RequireAuth({ children }: { children: React.ReactNode }) {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
-      <BrowserRouter>
+      <Router>
         <ScrollReset />
         <Cursor />
         <div className="grain" aria-hidden />
@@ -71,7 +74,7 @@ createRoot(document.getElementById('root')!).render(
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
-      </BrowserRouter>
+      </Router>
     </AuthProvider>
   </StrictMode>,
 )

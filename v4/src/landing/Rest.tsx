@@ -4,6 +4,12 @@ import { gsap, ScrollTrigger, SplitText, scrollToTarget } from '../lib/motion'
 import { Arrow, Icon, Logo, Magnetic, Mark } from '../components/ui'
 import { useTilt } from '../lib/hooks'
 import { api, MODELS, modelById } from '../api'
+import shotCompare from '../assets/shots/compare_panel.png'
+import shotDocs from '../assets/shots/document_html.webp'
+import shotGallery from '../assets/shots/gallery_image.webp'
+import shotMissions from '../assets/shots/missions.png'
+import shotVoice from '../assets/shots/voice_live_mode.png'
+import shotUsage from '../assets/shots/usage_analytics.png'
 
 /* ============================ Live playground ============================ */
 
@@ -103,12 +109,12 @@ export function Playground() {
 /* ============================ 3D screenshot carousel ============================ */
 
 const SHOTS = [
-  { k: 'Compare', src: '/shots/compare_panel.png' },
-  { k: 'Documents', src: '/shots/document_html.webp' },
-  { k: 'Gallery', src: '/shots/gallery_image.webp' },
-  { k: 'Missions', src: '/shots/missions.png' },
-  { k: 'Voice', src: '/shots/voice_live_mode.png' },
-  { k: 'Usage', src: '/shots/usage_analytics.png' },
+  { k: 'Compare', src: shotCompare },
+  { k: 'Documents', src: shotDocs },
+  { k: 'Gallery', src: shotGallery },
+  { k: 'Missions', src: shotMissions },
+  { k: 'Voice', src: shotVoice },
+  { k: 'Usage', src: shotUsage },
 ]
 
 /** The client's real screens on a 3D ring that turns with scroll and can be dragged. */
