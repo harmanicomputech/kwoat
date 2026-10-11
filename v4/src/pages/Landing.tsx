@@ -4,7 +4,7 @@ import { Hero, Nav, Preloader } from '../landing/Top'
 import { Logos } from '../landing/Logos'
 import { How } from '../landing/How'
 import { Features } from '../landing/Features'
-import { Playground, Tour, Stats, Voices, FAQ, Finale, Footer } from '../landing/Rest'
+import { Playground, Tour, Stats, Voices, Footer } from '../landing/Rest'
 import { Wallet } from '../landing/Wallet'
 import { Pricing } from '../landing/Pricing'
 import { AppDownload } from '../landing/AppDownload'
@@ -38,8 +38,6 @@ export default function Landing() {
         <Stats />
         <Voices />
         <Pricing />
-        <FAQ />
-        <Finale />
         <AppDownload />
       </main>
       <Footer />

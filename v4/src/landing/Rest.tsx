@@ -430,7 +430,6 @@ export function Footer() {
           </div>
           <div>
             <h4>Company</h4>
-            <a href="#faq">FAQ</a>
             <a href="#top">Privacy</a>
             <a href="#top">Terms</a>
           </div>
