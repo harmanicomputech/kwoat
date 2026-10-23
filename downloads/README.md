@@ -5,6 +5,7 @@ Ready-to-upload builds for cPanel / DirectAdmin. Download one, extract it, and u
 
 | File | Design |
 |---|---|
+| `kwoat-v5-public_html.zip` | v5 — standard SaaS layout, live try-it hero, Auto-mode switchboard |
 | `kwoat-v4-public_html.zip` | v4 "Prism" — light/dark, live product-window hero |
 | `kwoat-v3-public_html.zip` | v3 "Convergence" — dark, light-ray hero |
 | `kwoat-v2-public_html.zip` | v2 "Signal" — paper and ink, K-1 device |
@@ -15,6 +16,6 @@ Ready-to-upload builds for cPanel / DirectAdmin. Download one, extract it, and u
 The zips are for a web host: their `index.html` shows a blank page if you double-click it on your computer, because
 the site loads its code from `/assets/…` on the server.
 
-To look at v4 on your own computer, download **`kwoat-v4-preview.html`** instead and double-click it. It is the
+To look at v4 or v5 on your own computer, download **`kwoat-v4-preview.html`** or **`kwoat-v5-preview.html`** instead and double-click it. It is the
 whole site in one file (code, fonts and images inlined) and works offline in any modern browser. Don't upload the
 preview file to the host — use the zip for that.
