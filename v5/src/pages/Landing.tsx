@@ -3,6 +3,7 @@ import { gsap, ScrollTrigger, SplitText, prefersReducedMotion, startSmoothScroll
 import { Nav } from '../site/Nav'
 import { Hero } from '../site/Hero'
 import { Logos } from '../site/Logos'
+import { TryIt } from '../site/TryIt'
 import { Routing } from '../site/Routing'
 import { Bento } from '../site/Bento'
 import { Steps } from '../site/Steps'
@@ -50,6 +51,7 @@ export default function Landing() {
       <main>
         <Hero />
         <Logos />
+        <TryIt />
         <Routing />
         <Bento />
         <Steps />
